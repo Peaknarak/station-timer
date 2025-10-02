@@ -1,0 +1,1 @@
+import{j as s}from"./index-D7y7nnVM.js";function i({timeLeft:o}){const t=o??0,r=Math.floor(t/60).toString().padStart(2,"0"),n=(t%60).toString().padStart(2,"0");return s.jsxs("div",{className:"text-6xl font-mono tabular-nums",children:[r,":",n]})}export{i as T};
