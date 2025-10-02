@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Backend (ts-node-dev)",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "--inspect",
+        "${workspaceFolder}/backend/node_modules/ts-node-dev/bin/ts-node-dev.js",
+        "--respawn",
+        "--transpile-only",
+        "src/index.ts"
+      ],
+      "cwd": "${workspaceFolder}/backend",
+      "env": { "NODE_ENV": "development", "PORT": "4000" }
+    }
+  ]
+}
