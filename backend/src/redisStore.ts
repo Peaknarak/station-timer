@@ -1,4 +1,5 @@
-import Redis from 'ioredis';
+// src/redisStore.ts
+import type { Redis } from 'ioredis';
 import type { Room } from './types.js';
 
 const TTL_SEC = 2 * 60 * 60; // 2 ชม.
@@ -13,10 +14,13 @@ export class RedisStore {
       state: room.state,
       stationsCount: room.stationsCount,
       roundDurationSec: room.roundDurationSec,
-      stations: Array.from(room.stations.values()).map(s => ({
-        id: s.id, ownerClientId: s.ownerClientId, ready: s.ready, connected: s.connected
+      stations: Array.from(room.stations.values()).map((s) => ({
+        id: s.id,
+        ownerClientId: s.ownerClientId,
+        ready: s.ready,
+        connected: s.connected,
       })),
-      bindings: Array.from(room.bindings.entries())
+      bindings: Array.from(room.bindings.entries()),
     });
     await this.redis.setex(key, TTL_SEC, data);
   }
