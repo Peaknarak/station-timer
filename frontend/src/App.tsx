@@ -4,6 +4,9 @@ import { useRoom } from "./store/useRoom";
 import { socket, clientId as cid } from "./lib/socket";
 import SoundManager from "./components/SoundManager";
 
+const API_BASE =
+  (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/+$/, "") || "";
+
 export default function App() {
   const {
     setSocket,
@@ -20,8 +23,11 @@ export default function App() {
     setClientId(cid);
     setSocket(socket);
 
-    // optional: ping backend เพื่อตั้ง cookie session (ถ้า backend มี /api/hello)
-    fetch("/api/hello", { credentials: "include" })
+    // ping backend เพื่อตั้ง cookie session (ต้องใช้ URL เต็มไปยัง backend)
+    // ใน dev: Vite proxy จัดการให้ ถ้าใส่ base เป็น "" ได้ (ไม่ใส่ก็ได้)
+    // ใน prod: ต้องมี VITE_API_BASE_URL เช่น https://<your-backend>.onrender.com
+    const url = API_BASE ? `${API_BASE}/api/hello` : "/api/hello";
+    fetch(url, { credentials: "include" })
       .then((r) => r.json())
       .then((data) => setHello(data))
       .catch(() => {});
